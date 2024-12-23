@@ -1,3 +1,5 @@
+import IdeasApi from "../client/services/ideasApi";
+
 class IdeaList {
   #ideaListEl;
   #ideas;
@@ -5,22 +7,8 @@ class IdeaList {
 
   constructor() {
     this.#ideaListEl = document.querySelector("#idea-list");
-    this.#ideas = [
-      {
-        id: 1,
-        text: "Idea 1",
-        tag: "Business",
-        username: "John",
-        date: "02/01/2023",
-      },
-      {
-        id: 2,
-        text: "Idea 2",
-        tag: "Technology",
-        username: "Jill",
-        date: "02/01/2023",
-      },
-    ];
+    this.#ideas = [];
+    this.getIdeas();
 
     this.#validTags = new Set();
     this.#validTags.add("technology");
@@ -29,6 +17,16 @@ class IdeaList {
     this.#validTags.add("education");
     this.#validTags.add("health");
     this.#validTags.add("inventions");
+  }
+
+  async getIdeas() {
+    try {
+      const res = await IdeasApi.getIdeas();
+      this.#ideas = res.data.data;
+      this.render();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   getTagClass(tag) {
