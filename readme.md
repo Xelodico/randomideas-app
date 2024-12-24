@@ -6,7 +6,9 @@ This app includes a Node.js/Express REST API that uses MongoDB for a database. T
 
 ![Screenshot](https://github.com/bradtraversy/randomideas-app/blob/main/assets/screen.png?raw=true)
 
-## 🖥️ Usage
+## 🖥️ Local Usage
+
+[Download the ZIP file](https://github.com/Xelodico/randomideas-app/archive/refs/heads/main.zip)
 
 ### Install Dependencies
 
@@ -52,7 +54,7 @@ The production build will be put into the `public` folder, which is the Express 
 
 ### Environment Variables
 
-Rename `.env-example` to `.env` and add your MongoDB URI to the `.env` file.
+Create a `.env` file and add your MongoDB URI to the file.
 
 ```env
 MONGO_URI=your_mongodb_uri
