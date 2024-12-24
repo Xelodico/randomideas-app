@@ -1,12 +1,12 @@
-# RandomIdeas App
+# 💡RandomIdeas App
 
-This is a fullstack application for sharing random ideas. It is a project in my **Modern JS From The Beginning** course.
+This is a full-stack application for sharing random ideas. It is a bonus project from Brad Traversy's [**Modern JS From The Beginning 2.0**](https://www.traversymedia.com/modern-javascript-2-0) course. This project goes beyond the fundamentals and gave me a valuable taste of what full-stack development is like. I highly recommend the course!
 
 This app includes a Node.js/Express REST API that uses MongoDB for a database. The client-side is built with Webpack.
 
-<img src="assets/screen.png">
+![Screenshot](https://github.com/bradtraversy/randomideas-app/blob/main/assets/screen.png?raw=true)
 
-## Usage
+## 🖥️ Usage
 
 ### Install Dependencies
 
@@ -54,11 +54,11 @@ The production build will be put into the `public` folder, which is the Express 
 
 Rename `.env-example` to `.env` and add your MongoDB URI to the `.env` file.
 
-```
+```env
 MONGO_URI=your_mongodb_uri
 ```
 
-## REST Endpoints
+## 🛣️ REST Endpoints
 
 ### Ideas
 
@@ -70,4 +70,4 @@ MONGO_URI=your_mongodb_uri
 | /api/ideas/:id | Update idea    | PUT    | { text, tag, username } |
 | /api/ideas/:id | Delete idea    | DELETE | username                |
 
-When updating or deleting, the username must match the username of the idea creator.
+When updating or deleting an idea, the username must match the username of the idea's creator. This mimics basic user authentication and adds a layer of simple security.
