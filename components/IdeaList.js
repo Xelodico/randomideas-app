@@ -75,6 +75,7 @@ class IdeaList {
           idea.username === localStorage.getItem("username")
             ? `<button class="delete"><i class="fas fa-times"></i></button>`
             : "";
+        const ideaDate = `${idea.date.slice(0, 10)} ${idea.date.slice(11, 16)}`;
         return `<div class="card" data-id="${idea._id}">
         ${deleteBtn}
           <h3>
@@ -82,7 +83,7 @@ class IdeaList {
           </h3>
           <p class="tag ${tagClass}">${idea.tag.toUpperCase()}</p>
           <p>
-            Posted on <span class="date">${idea.date}</span> by
+            Posted on <span class="date">${ideaDate}</span> by
             <span class="author">${idea.username}</span>
           </p>
         </div>`;
