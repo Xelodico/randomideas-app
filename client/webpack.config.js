@@ -24,9 +24,12 @@ const config = {
     hot: true, // Enable hot module replacement (updates modules without a full page reload)
     compress: true, // Enable gzip compression for faster file serving
     historyApiFallback: true, // Redirect 404s to 'index.html' (useful for Single Page Applications)
-    proxy: {
-      "/api": "http://localhost:5000", // Forward `/api` requests to a backend server running on port 5000
-    },
+    proxy: [
+      {
+        context: ["/api"],
+        target: "http://localhost:5000", // Forward `/api` requests to a backend server running on port 5000
+      },
+    ],
   },
 
   // Module rules for processing different types of files
