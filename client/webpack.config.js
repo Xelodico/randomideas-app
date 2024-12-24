@@ -1,69 +1,72 @@
-// Importing necessary modules
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin"); // Automatically generates the HTML file
-const MiniCssExtractPlugin = require("mini-css-extract-plugin"); // Extracts CSS into separate files
+// Importing necessary modules for Webpack
+const path = require("path"); // Node.js module to work with file and directory paths
+const HtmlWebpackPlugin = require("html-webpack-plugin"); // Plugin to generate the HTML file automatically
+const MiniCssExtractPlugin = require("mini-css-extract-plugin"); // Plugin to extract CSS into separate files
 
 // Webpack configuration object
 const config = {
-  // Setting the mode to 'development' for better debugging and readable output
-  mode: "development",
+  mode: "production", // Set Webpack mode to 'production' for optimizations like minification
 
-  // Entry point: where the bundling process starts (main JS file)
-  entry: "./src/index.js",
+  // Entry: The main file where the bundling process starts
+  entry: "./src/index.js", // Entry point for the application
 
-  // Output: where the bundled files will be saved
+  // Output: Specifies the location and name of the bundled files
   output: {
-    path: path.resolve(__dirname, "../public"), // Output directory is 'public'
-    filename: "bundle.js", // Name of the output JS bundle
+    path: path.resolve(__dirname, "../public"), // Absolute path to the 'public' directory for output
+    filename: "bundle.js", // Name of the bundled JavaScript file
   },
 
-  // Configuration for webpack-dev-server to enable live reloading and development features
+  // Development server configuration for live reloading and development utilities
   devServer: {
-    // Serve content from the 'public' directory
-    static: { directory: path.resolve(__dirname, "../public") },
-    port: 3000, // The port on which the dev server will run
-    open: true, // Automatically open the browser after server starts
-    hot: true, // Enable hot module replacement without a full reload
-    compress: true, // Enable gzip compression for everything served
-    historyApiFallback: true, // Fallback to index.html for Single Page Applications (SPA)
+    static: { directory: path.resolve(__dirname, "../public") }, // Serve files from the 'public' directory
+    port: 3000, // Port number for the development server
+    open: true, // Automatically open the browser when the server starts
+    hot: true, // Enable hot module replacement (updates modules without a full page reload)
+    compress: true, // Enable gzip compression for faster file serving
+    historyApiFallback: true, // Redirect 404s to 'index.html' (useful for Single Page Applications)
+    proxy: {
+      "/api": "http://localhost:5000", // Forward `/api` requests to a backend server running on port 5000
+    },
   },
 
-  // Module configuration for handling different file types
+  // Module rules for processing different types of files
   module: {
-    // Rules for different types of modules
     rules: [
       // Rule for handling CSS files
       {
-        test: /\.css$/, // Target all .css files
-        use: [MiniCssExtractPlugin.loader, "css-loader"], // Use MiniCssExtractPlugin to extract CSS, and 'css-loader' to resolve CSS imports
+        test: /\.css$/, // Match all `.css` files
+        use: [
+          MiniCssExtractPlugin.loader, // Extracts CSS into separate files
+          "css-loader", // Resolves `@import` and `url()` in CSS files
+        ],
       },
-      // Rule for handling JavaScript files with Babel
+      // Rule for transpiling JavaScript files with Babel
       {
-        test: /\.js$/, // Target all .js files
-        exclude: /node_modules/, // Exclude 'node_modules' from being processed
+        test: /\.js$/, // Match all `.js` files
+        exclude: /node_modules/, // Exclude files in the `node_modules` directory
         use: {
-          loader: "babel-loader", // Use Babel to transpile modern JavaScript to older versions for better browser support
+          loader: "babel-loader", // Use Babel to transpile JavaScript
           options: {
-            presets: ["@babel/preset-env"], // Babel preset to compile ES6+ down to ES5
+            presets: ["@babel/preset-env"], // Compile modern JavaScript (ES6+) down to ES5 for compatibility
           },
         },
       },
     ],
   },
 
-  // Plugins used in the build process
+  // Plugins for enhancing the build process
   plugins: [
-    // Automatically generates an HTML file that includes the bundled JavaScript and CSS
+    // Generates an HTML file that includes references to the bundled JavaScript and CSS files
     new HtmlWebpackPlugin({
-      title: "Webpack App", // Title of the generated HTML page
-      filename: "index.html", // Output HTML file name
-      template: "./src/index.html", // Use a template HTML file from the 'src' directory
+      title: "Webpack App", // Title of the generated HTML file
+      filename: "index.html", // Output file name in the 'public' directory
+      template: "./src/index.html", // Use the specified HTML template from the 'src' directory
     }),
 
-    // Extracts CSS into a separate file instead of inline style tags
-    new MiniCssExtractPlugin(),
+    // Extracts CSS into separate files instead of inline <style> tags
+    new MiniCssExtractPlugin(), // Generates a CSS file for the bundled CSS
   ],
 };
 
-// Export the config object for Webpack to use
+// Export the Webpack configuration object
 module.exports = config;
